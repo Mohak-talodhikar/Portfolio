@@ -126,7 +126,7 @@ export const HeroSection = () => {
           />
 
           <motion.p 
-            className="text-lg md:text-xl text-black max-w-xl mb-8 leading-relaxed w-full"
+            className="text-lg md:text-xl text-foreground/80 max-w-xl mb-8 leading-relaxed w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
