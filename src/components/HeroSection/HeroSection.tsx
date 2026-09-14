@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import { ArrowRight, Download, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import TechStackSection from "../TechStackSection/TechStackSection";
-import { Button } from "../lightswind/button";
+import { Button, buttonVariants } from "../lightswind/button";
 import { Badge } from "../lightswind/badge";
 import { HangingIdCard } from "../lightswind/HangingIdCard";
 import { AuroraTextEffect } from "../lightswind/aurora-text-effect";
@@ -10,18 +11,27 @@ import { AuroraBackground } from "../lightswind/aurora-background";
 import GlowingBackground from "../lightswind/GlowingBackground";
 import ParticleOrbitEffect from "../lightswind/ParticleOrbitEffect";
 import EtherWavesBackground from "../lightswind/ether-waves-background";
+import { useReducedFx } from "../../hooks/use-reduced-fx";
 
 export const HeroSection = () => {
+  const lenis = useLenis();
+  const scrollToProjects = () => {
+    if (lenis) lenis.scrollTo("#projects");
+    else document.getElementById("projects")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const { coarse, reducedMotion } = useReducedFx();
+  const calmFx = coarse || reducedMotion;
+
   return (
-    <section id="hero" className="relative min-h-[100vh] flex flex-col pt-12 md:pt-16 overflow-hidden bg-background">
+    <section id="hero" className="relative min-h-[100svh] flex flex-col pt-12 md:pt-16 overflow-hidden bg-background">
       {/* Layer 1: Deep animated background with ether waves */}
       <EtherWavesBackground 
         className="absolute inset-0 z-0"
         lineCount={60}
         lineDistance={0.3}
         animationSpeed={0.15}
-        interactive={true}
-        parallax={true}
+        interactive={!coarse}
+        parallax={!coarse}
         parallaxStrength={0.5}
         transparentBg={true}
       />
@@ -43,19 +53,21 @@ export const HeroSection = () => {
         gradientTo="#030712"
       />
       
-      {/* Layer 4: Particle orbit effect for depth */}
-      <div className="absolute inset-0 z-2 pointer-events-none">
-        <ParticleOrbitEffect
-          className="absolute inset-0"
-          particleCount={25}
-          radius={80}
-          particleSpeed={0.02}
-          intensity={0.8}
-          fadeOpacity={0.05}
-          colorRange={[250, 330]}
-          autoColors={true}
-        />
-      </div>
+      {/* Layer 4: Particle orbit effect for depth (desktop motion only) */}
+      {!calmFx && (
+        <div className="absolute inset-0 z-2 pointer-events-none" aria-hidden="true">
+          <ParticleOrbitEffect
+            className="absolute inset-0"
+            particleCount={25}
+            radius={80}
+            particleSpeed={0.02}
+            intensity={0.8}
+            fadeOpacity={0.05}
+            colorRange={[250, 330]}
+            autoColors={true}
+          />
+        </div>
+      )}
       
       {/* Layer 5: Subtle dot pattern overlay */}
       <div className="absolute inset-0 z-5 opacity-20">
@@ -66,11 +78,11 @@ export const HeroSection = () => {
       <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--bg)_100%)]" />
       
       {/* Main Content Area */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 pb-12">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20 pb-12">
         
         {/* Left Content */}
         <motion.div 
-          className="flex-1 flex flex-col items-center md:items-start text-center md:text-left pt-0"
+          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left pt-0"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -86,7 +98,7 @@ export const HeroSection = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
-              <span className="text-xs font-medium text-muted-foreground">Available for freelance & full-time</span>
+              <span className="text-xs font-medium text-muted-foreground">Available for freelance projects & full-time roles</span>
             </Badge>
           </motion.div>
 
@@ -94,7 +106,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-4 text-center md:text-left"
+            className="mb-4 text-center lg:text-left"
           >
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-2">
               Hi, I'm
@@ -102,7 +114,7 @@ export const HeroSection = () => {
             
             {/* Light Theme: Clean Vibrant Gradient Text */}
             <div className="block dark:hidden">
-              <span className="bg-gradient-to-r from-violet-600 via-sky-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-extrabold text-[clamp(3rem,6.5vw,5.5rem)] leading-none tracking-tight block pb-2 select-none">
+              <span className="bg-gradient-to-r from-violet-600 via-sky-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-extrabold text-[clamp(3rem,6.5vw,5.5rem)] leading-none tracking-tight block pb-2 select-none break-words">
                 Mohak Talodhikar
               </span>
             </div>
@@ -113,13 +125,13 @@ export const HeroSection = () => {
                 text="Mohak Talodhikar"
                 fontSize="clamp(3rem, 6.5vw, 5.5rem)"
                 className="bg-transparent overflow-visible p-0 justify-start"
-                textClassName="bg-gradient-to-r from-cyan-400 via-purple-400 to-sky-300 bg-clip-text text-transparent pb-2 font-extrabold"
+                textClassName="bg-gradient-to-r from-cyan-400 via-purple-400 to-sky-300 bg-clip-text text-transparent pb-2 font-extrabold break-words"
               />
             </div>
           </motion.div>
 
           <motion.div 
-            className="h-1 w-full md:w-1/3 bg-gradient-to-r from-primary via-cyan-500 to-sky-400 rounded-full mb-8 shadow-[0_0_20px_rgba(139,92,246,0.4)]"
+            className="h-1 w-1/3 bg-gradient-to-r from-primary via-cyan-500 to-sky-400 rounded-full mb-8 shadow-[0_0_20px_rgba(139,92,246,0.4)]"
             initial={{ width: 0 }}
             animate={{ width: "33%" }}
             transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
@@ -131,12 +143,12 @@ export const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            AI Engineer specializing in RAG Systems, LLMs, and Cloud Architecture. Building intelligent, scalable solutions with Python, AWS, and modern AI frameworks.
+            AI Engineer specializing in RAG systems, LLMs, and cloud architecture. I build grounded RAG chatbots and serverless web apps with Python, FastAPI, FAISS, and AWS.
           </motion.p>
 
           {/* Tech highlights */}
           <motion.div 
-            className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-8 w-full md:w-auto"
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8 w-full lg:w-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.8 }}
@@ -155,22 +167,27 @@ export const HeroSection = () => {
           </motion.div>
 
           <motion.div 
-            className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-10 w-full md:w-auto"
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-10 w-full lg:w-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <Button size="lg" className="rounded-full px-7 h-12 bg-primary text-primary-foreground font-semibold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:-translate-y-1">
-              View Projects <ArrowRight className="w-4 h-4" />
+            <Button size="lg" onClick={scrollToProjects} aria-label="View selected projects" className="rounded-full px-7 h-12 bg-primary-action text-primary-foreground font-semibold flex items-center gap-2 hover:bg-primary-action/90 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:-translate-y-1">
+              View Projects <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10">
-              Resume <Download className="w-4 h-4" />
-            </Button>
+            <a
+              href="/resume.pdf"
+              download="Mohak-Talodhikar-Resume.pdf"
+              aria-label="Download Mohak Talodhikar's resume (PDF)"
+              className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10" })}
+            >
+              Download Resume <Download className="w-4 h-4" aria-hidden="true" />
+            </a>
           </motion.div>
 
           {/* Social Links */}
           <motion.div 
-            className="flex items-center gap-5 justify-center md:justify-start w-full md:w-auto"
+            className="flex items-center gap-1 justify-center lg:justify-start w-full lg:w-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.8 }}
@@ -189,7 +206,7 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
-                className="text-muted-foreground hover:text-primary transition-all hover:-translate-y-1 hover:scale-110 transform duration-200"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-muted-foreground hover:text-primary transition-all hover:-translate-y-1 hover:scale-110 transform duration-200"
                 aria-label={label}
               >
                 <Icon className="w-5 h-5" />
@@ -212,7 +229,7 @@ export const HeroSection = () => {
             accentColor="#8b5cf6"
             ropeLength={75}
             ropeColor="#27272a"
-            cardWidth="w-72 sm:w-80 md:w-84"
+            cardWidth="w-full max-w-72 sm:max-w-80"
           >
             <div className="flex flex-col h-full bg-card w-full">
               {/* Card Header Banner with Avatar */}
@@ -281,7 +298,7 @@ export const HeroSection = () => {
                   </div>
                   <div>
                     <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Experience</span>
-                    <span className="font-bold text-foreground text-xs">2022 - Present</span>
+                    <span className="font-bold text-foreground text-xs">2022 – 2026</span>
                   </div>
                   <div>
                     <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Status</span>

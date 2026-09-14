@@ -121,6 +121,7 @@ export default function Header() {
               {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
+                aria-label="Open navigation menu"
                 className="md:hidden text-foreground hover:text-primary transition-colors p-2"
               >
                 <Menu size={24} />
@@ -142,6 +143,7 @@ export default function Header() {
               >
                 <motion.button
                   onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Close navigation menu"
                   className="absolute top-8 right-8 text-foreground"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}

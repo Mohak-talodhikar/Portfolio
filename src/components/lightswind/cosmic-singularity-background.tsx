@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 import {
   BufferAttribute,
   BufferGeometry,
-  Clock,
+  Timer,
   OrthographicCamera,
   Points,
   Scene,
@@ -321,7 +321,7 @@ export default function CosmicSingularityBackground({
     const points = new Points(geometry, material);
     scene.add(points);
 
-    const clock = new Clock();
+    const timer = new Timer();
 
     const setSize = () => {
       if (!active) return;
@@ -384,7 +384,8 @@ export default function CosmicSingularityBackground({
       if (!active) return;
 
       if (isInView) {
-        const time = clock.getElapsedTime();
+        timer.update();
+        const time = timer.getElapsed();
         uniforms.iTime.value = time;
 
         let targetX = 0;

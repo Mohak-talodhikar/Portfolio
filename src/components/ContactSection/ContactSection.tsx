@@ -33,7 +33,7 @@ export const ContactSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="glass-panel p-8 md:p-12 rounded-[3rem] border border-foreground/10 relative overflow-hidden"
+        className="glass-panel p-6 min-[480px]:p-8 md:p-12 rounded-[2rem] min-[480px]:rounded-[3rem] border border-foreground/10 relative overflow-hidden"
       >
         {/* Background Gradients */}
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
@@ -46,7 +46,7 @@ export const ContactSection = () => {
               Let's <span className="text-gradient-primary">Connect</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl">
-              Currently open for new opportunities and exciting collaborations. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+              Open to full-time AI Engineer roles and freelance AI work. Email is fastest — I read every message.
             </p>
           </div>
 
@@ -73,13 +73,13 @@ export const ContactSection = () => {
                 }`}>
                   <method.icon className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <span className="text-xs font-medium text-muted-foreground block">{method.label}</span>
-                  <span className="font-medium">{method.value}</span>
+                  <span className="font-medium break-all">{method.value}</span>
                 </div>
                 {method.primary && (
                   <span className="text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                    Mail <ExternalLink className="w-3 h-3" />
+                    Send email <ExternalLink className="w-3 h-3" aria-hidden="true" />
                   </span>
                 )}
               </motion.a>

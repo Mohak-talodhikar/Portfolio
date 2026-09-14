@@ -1,0 +1,108 @@
+% Base Resume - Mohak Talodhikar - Junior AI Engineer / GenAI Engineer
+% Saved as canonical base for all future tailored versions. Do not edit directly - copy and tailor per JD.
+% Hardened: PDF metadata, searchable/ATS-safe output, wrappable links, print-safe link token.
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=0.6in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\definecolor{ResumeLink}{HTML}{1A3A8F}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{cmap}
+\pdfgentounicode=1
+\IfFileExists{glyphtounicode.tex}{\input{glyphtounicode}}{}
+\usepackage{hyperref}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% Overflow resilience: allow long URLs / model names to break instead of overfull boxes.
+\setlength{\emergencystretch}{3em}
+\tolerance=2000
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\clubpenalty=10000
+\widowpenalty=10000
+\raggedbottom
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=ResumeLink,
+  linkcolor=ResumeLink,
+  citecolor=ResumeLink,
+  breaklinks=true,
+  pdfdisplaydoctitle=true,
+  pdftitle={Mohak Talodhikar - Junior AI Engineer / GenAI Engineer},
+  pdfauthor={Mohak Talodhikar},
+  pdfsubject={Resume - Junior AI / GenAI Engineer},
+  pdfkeywords={AI Engineer, GenAI, RAG, LangChain, FastAPI, FAISS, Python}
+}
+\urlstyle{same}
+
+\begin{document}
+
+\begin{center}
+{\LARGE \textbf{Mohak Talodhikar}} \\[2pt]
+{\textbf{Junior AI Engineer / GenAI Engineer}} \\[4pt]
+{\small
+\href{tel:+917387747141}{+91-7387747141} \textbar{} \href{mailto:mohaktalodhikar@gmail.com}{mohaktalodhikar@gmail.com} \textbar{} Telangana, India \textbar{} Open to Relocation \\
+\href{https://www.linkedin.com/in/mohak-talodhikar}{\underline{linkedin.com/in/mohak-talodhikar}} \textbar{}
+\href{https://github.com/Mohak-talodhikar}{\underline{github.com/Mohak-talodhikar}}
+}
+\end{center}
+
+\section{Professional Summary}
+Junior AI Engineer with hands-on experience building a PDF question-answering RAG API using Python, FastAPI, LangChain, FAISS, and Hugging Face (all-MiniLM-L6-v2, flan-t5-small). Frontend owner in a team of 4 for a serverless departmental voting system on AWS used by 500+ students. Seeking a Junior AI / GenAI Engineer role focused on LLM applications and retrieval systems.
+
+\section{Technical Skills}
+\begin{description}[leftmargin=1.2em,labelsep=0.4em,itemsep=2pt,parsep=0pt,font=\normalfont\bfseries]
+\item[Programming:] Python
+\item[AI / GenAI:] LangChain (PyPDFLoader, RecursiveCharacterTextSplitter, FAISS vector store, PromptTemplate), RAG, prompt design, Hugging Face Transformers
+\item[Models:] google/flan-t5-small (text-to-text, 512 max new tokens), sentence-transformers/all-MiniLM-L6-v2
+\item[Vector DB:] FAISS (top-k 3 retrieval)
+\item[Backend:] FastAPI (REST, /upload, /ask), Pydantic, Uvicorn, CORS
+\item[Cloud:] AWS Lambda, API Gateway, DynamoDB, S3, Cognito, CloudFront (AWS console)
+\item[Frontend:] HTML, CSS, JavaScript, voting-flow UI design
+\item[Tools:] Git, GitHub
+\end{description}
+
+\section{Projects}
+
+\textbf{RAG Chatbot - Solo build} \hfill Mar 2026 - May 2026 \\
+\textit{Python, FastAPI, LangChain, FAISS, Hugging Face} \textbar{} \href{https://github.com/Mohak-talodhikar/RAG-ChatBot}{\underline{github.com/Mohak-talodhikar/RAG-ChatBot}}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt,parsep=0pt]
+\item Built PDF question-answering API with FastAPI exposing /upload and /ask endpoints, chaining FAISS retriever, prompt template, and google/flan-t5-small through LangChain for grounded responses.
+\item Processed uploads with PyPDFLoader and RecursiveCharacterTextSplitter at 1000-character chunks with 200-character overlap, embedded with sentence-transformers/all-MiniLM-L6-v2 and stored in FAISS with top-k 3 retrieval.
+\item Shipped local-only Hugging Face text-to-text pipeline using flan-t5-small with 512 max new tokens, adding PDF validation, temporary-file cleanup, CORS setup, and deduplication of repeated sentences in answers.
+\end{itemize}
+
+\textbf{Departmental Voting System - Team of 4, owned frontend design} \hfill Feb 2025 - Jun 2025 \\
+\textit{Frontend design, AWS console (Lambda, API Gateway, DynamoDB, Cognito)} \textbar{} \href{https://github.com/Mohak-talodhikar/Online-voting-system}{\underline{github.com/Mohak-talodhikar/Online-voting-system}}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt,parsep=0pt]
+\item Owned frontend design for a team of 4 covering login, candidate selection, confirmation, and results display; tested locally and deployed for departmental voting used by 500+ students.
+\item Supported the team's backend setup with console-configured Lambda, API Gateway, DynamoDB storage, and Cognito authentication for live voting.
+\item Enforced one-vote-per-student validation with the team during the live election to protect vote integrity.
+\end{itemize}
+
+\section{Education}
+\textbf{B.Tech (CSE) - 7.07 CGPA} \hfill Oct 2022 - Jul 2026 \\
+\textit{Rajiv Gandhi College of Engineering, Research and Technology, Chandrapur}
+
+\section{Training and Courses}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt,parsep=0pt]
+\item Datacom - AI in the Workplace Job Simulation (Forage, Feb 2026)
+\item Career Essentials in GitHub Professional Certificate (LinkedIn Learning)
+\item Introduction to Prompt Engineering for Generative AI (LinkedIn Learning)
+\item Generative AI Fundamentals (LinkedIn Learning)
+\item C/C++ and Java programming (academic coursework)
+\end{itemize}
+
+\end{document}

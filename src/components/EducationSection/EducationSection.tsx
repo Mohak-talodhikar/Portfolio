@@ -1,14 +1,14 @@
 import SkillCategory from "./SkillCategory";
 import { motion } from "framer-motion";
-import { GraduationCap, BookOpen, Award, CheckCircle2, Calendar, Building2, Sparkles } from "lucide-react";
+import { GraduationCap, CheckCircle2, Calendar, Building2, Sparkles } from "lucide-react";
 import { MagicCard } from "../lightswind/magic-card";
 
 export const EducationSection = () => {
   const education = [
     {
       degree: "B.Tech in Computer Science & Engineering",
-      school: "University",
-      year: "2020 – 2024",
+      school: "Rajiv Gandhi College of Engineering, Chandrapur",
+      year: "2022 – 2026",
       badge: "AI Specialization",
       badgeIcon: Sparkles,
       badgeColor: "text-primary bg-primary/10 border-primary/30",
@@ -43,7 +43,7 @@ export const EducationSection = () => {
             </h2>
           </div>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Building the theoretical foundation in AI and software engineering that empowers practical problem-solving.
+            Theory in AI and software engineering, applied through RAG systems and serverless web apps.
           </p>
         </motion.div>
 

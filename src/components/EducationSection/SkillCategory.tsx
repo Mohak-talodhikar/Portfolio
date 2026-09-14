@@ -23,11 +23,11 @@ export default function ProfessionalProfile() {
 
   const toolsAndFrameworks = [
     { name: "Docker", icon: Box, color: "text-sky-400 border-sky-500/30 bg-sky-500/10" },
-    { name: "HuggingFace", icon: Cpu, color: "text-yellow-400 border-yellow-500/30 bg-yellow-500/10" },
-    { name: "Vector Database", icon: Database, color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10" },
+    { name: "Hugging Face", icon: Cpu, color: "text-yellow-400 border-yellow-500/30 bg-yellow-500/10" },
+    { name: "FAISS Vector Store", icon: Database, color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10" },
     { name: "Git & GitHub", icon: Globe, color: "text-gray-400 border-gray-500/30 bg-gray-500/10" },
     { name: "n8n Automation", icon: Rocket, color: "text-rose-400 border-rose-500/30 bg-rose-500/10" },
-    { name: "Deployment", icon: Cloud, color: "text-purple-400 border-purple-500/30 bg-purple-500/10" },
+    { name: "Cloud Deployment", icon: Cloud, color: "text-purple-400 border-purple-500/30 bg-purple-500/10" },
     { name: "Google Gemini APIs", icon: Brain, color: "text-blue-400 border-blue-500/30 bg-blue-500/10" },
   ];
 
@@ -102,7 +102,7 @@ export default function ProfessionalProfile() {
                 <Rocket className="w-5 h-5 text-primary" /> Tools & Frameworks
               </h4>
               <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/60 px-3 py-1 rounded-full border border-border/50">
-                Arsenal
+                Tools
               </span>
             </div>
 

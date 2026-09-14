@@ -7,6 +7,7 @@
   --color-card-foreground: var(--card-fg);
   --color-primary: var(--primary);
   --color-primary-foreground: #ffffff;
+  --color-primary-action: #7c3aed;
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-fg);
   --color-border: var(--border);
@@ -43,6 +44,9 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     min-height: 100vh;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
   
   .dark body {
@@ -58,6 +62,12 @@
 
   ::selection {
     background-color: rgba(139, 92, 246, 0.3);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -77,8 +87,26 @@
 }
 
 .text-gradient-primary {
+  background: linear-gradient(135deg, #7c3aed 0%, #0284c7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .text-gradient-primary {
   background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Touch + motion adaptations (mobile-first, non-visual) */
+.tech-marquee {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-marquee {
+    animation: none;
+  }
 }

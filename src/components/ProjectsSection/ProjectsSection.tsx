@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ExternalLink, ChevronLeft, ChevronRight, Code2, Brain, Zap, Globe, MessageSquare, Stethoscope } from "lucide-react";
+import { ArrowUpRight, ExternalLink, ChevronLeft, ChevronRight, Code2, Brain, Zap, Globe, MessageSquare } from "lucide-react";
 
 const projects = [
   {
@@ -11,7 +11,7 @@ const projects = [
     link: "https://github.com/Mohak-talodhikar/Aura-Finance",
     image: "https://images.pexels.com/photos/6169673/pexels-photo-6169673.jpeg?auto=compress&cs=tinysrgb&w=1200",
     gridClass: "md:col-span-7 h-[420px]",
-    description: "A modern, privacy-focused web application designed to simplify personal finance management through intelligent, multi-model AI insights. Features secure data handling and AI-powered financial recommendations.",
+    description: "A privacy-focused finance app for personal finance management, with multi-model AI insights and plain-language recommendations. Built with secure data handling by default.",
     features: ["AI-Powered Insights", "Privacy Focused", "Multi-Model AI", "Financial Analytics"],
     metrics: { type: "TypeScript", license: "MIT", status: "Active" },
     tech: ["TypeScript", "React", "AI/ML", "Privacy-First"]
@@ -24,10 +24,10 @@ const projects = [
     link: "https://github.com/Mohak-talodhikar/RAG-ChatBot",
     image: "https://images.pexels.com/photos/8294591/pexels-photo-8294591.jpeg?auto=compress&cs=tinysrgb&w=1200",
     gridClass: "md:col-span-5 h-[420px]",
-    description: "An end-to-end Retrieval-Augmented Generation (RAG) chatbot that processes PDF documents and generates context-aware answers using semantic search and a local HuggingFace LLM.",
-    features: ["PDF Processing", "Semantic Search", "HuggingFace LLM", "Context-Aware"],
-    metrics: { type: "JavaScript", license: "MIT", status: "Active" },
-    tech: ["JavaScript", "RAG", "HuggingFace", "Vector Search"]
+    description: "An end-to-end Retrieval-Augmented Generation (RAG) chatbot that processes PDF documents and generates grounded, context-aware answers with semantic search over FAISS and a local Hugging Face LLM.",
+    features: ["PDF Processing", "Semantic Search", "Hugging Face LLM", "Grounded Answers"],
+    metrics: { type: "Python", license: "MIT", status: "Active" },
+    tech: ["Python", "RAG", "Hugging Face", "FAISS"]
   },
   {
     id: 3,
@@ -113,10 +113,10 @@ export const ProjectsSection = () => {
         className="mb-12 md:mb-16"
       >
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-center md:text-left">
-          Selected <span className="text-gradient-primary">Works</span>
+          Selected <span className="text-gradient-primary">Projects</span>
         </h2>
         <p className="text-muted-foreground text-center md:text-left max-w-2xl text-lg">
-          A showcase of AI projects, RAG systems, and intelligent applications I've built.
+          Grounded RAG systems, AI assistants, and serverless web apps — every project links to its repo.
         </p>
       </motion.div>
 
@@ -137,7 +137,8 @@ export const ProjectsSection = () => {
               href={projects[activeProject].link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-[2.25rem] shadow-2xl border border-foreground/10 h-[500px] md:h-[550px] block"
+              aria-label={`Open ${projects[activeProject].title} repository in a new tab`}
+              className="group relative overflow-hidden rounded-[2.25rem] shadow-2xl border border-foreground/10 h-[620px] min-[480px]:h-[580px] md:h-[550px] block"
             >
               {/* Background Image */}
               <div className="absolute inset-0 bg-neutral-950">
@@ -151,7 +152,7 @@ export const ProjectsSection = () => {
               </div>
 
               {/* Content Overlay */}
-              <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between">
+              <div className="absolute inset-0 p-6 min-[480px]:p-8 md:p-12 flex flex-col justify-between">
                 {/* Top: Category Badge */}
                 <div className="flex justify-between items-start">
                   <motion.span 
@@ -165,17 +166,15 @@ export const ProjectsSection = () => {
                   </motion.span>
                   
                   <div className="flex items-center gap-2">
-                    <motion.a
-                      href={projects[activeProject].link}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <motion.span
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.4 }}
-                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center hover:bg-white hover:text-black transition-all shadow-lg"
+                      aria-hidden="true"
+                      className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all shadow-lg"
                     >
                       <ExternalLink className="w-5 h-5 text-white" />
-                    </motion.a>
+                    </motion.span>
                   </div>
                 </div>
 
@@ -194,7 +193,7 @@ export const ProjectsSection = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="text-lg md:text-xl text-white/90 mb-4 max-w-3xl"
+                    className="text-base min-[480px]:text-lg md:text-xl text-white/90 mb-4 max-w-3xl line-clamp-4 min-[480px]:line-clamp-none"
                   >
                     {projects[activeProject].description}
                   </motion.p>
@@ -236,7 +235,7 @@ export const ProjectsSection = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="flex items-center gap-6 mt-4"
+                    className="flex items-center flex-wrap gap-x-6 gap-y-3 mt-4"
                   >
                     {Object.entries(projects[activeProject].metrics).map(([key, value], i) => (
                       <div key={i} className="text-center">
@@ -249,15 +248,19 @@ export const ProjectsSection = () => {
               </div>
 
               {/* Navigation Arrows */}
-              <div className="absolute bottom-8 right-8 flex items-center gap-3">
+              <div className="absolute bottom-6 right-6 flex items-center gap-3">
                 <button
-                  onClick={(e) => { e.preventDefault(); handlePrev(); }}
+                  type="button"
+                  aria-label="Show previous project"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); handlePrev(); }}
                   className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all"
                 >
                   <ChevronLeft className="w-6 h-6 text-white" />
                 </button>
                 <button
-                  onClick={(e) => { e.preventDefault(); handleNext(); }}
+                  type="button"
+                  aria-label="Show next project"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleNext(); }}
                   className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all"
                 >
                   <ChevronRight className="w-6 h-6 text-white" />
@@ -265,19 +268,28 @@ export const ProjectsSection = () => {
               </div>
 
               {/* Progress Indicator */}
-              <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2">
-                {projects.map((_, i) => (
+              <div className="absolute bottom-8 left-6 right-36 min-[480px]:right-40 flex flex-wrap items-center gap-1 md:left-1/2 md:right-auto md:-translate-x-1/2">
+                {projects.map((project, i) => (
                   <button
-                    key={i}
+                    key={project.id}
+                    type="button"
+                    aria-label={`Go to project: ${project.title}`}
+                    aria-current={i === activeProject ? "true" : undefined}
                     onClick={(e) => {
                       e.preventDefault();
+                      e.stopPropagation();
                       setDirection(i > activeProject ? 1 : -1);
                       setActiveProject(i);
                     }}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === activeProject ? "w-8 bg-primary" : "w-2 bg-white/30 hover:bg-white/50"
-                    }`}
-                  />
+                    className="min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === activeProject ? "w-8 bg-primary" : "w-2 bg-white/30"
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
             </a>
@@ -293,6 +305,7 @@ export const ProjectsSection = () => {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Open ${project.title} repository in a new tab`}
             className="group relative overflow-hidden rounded-[2rem] block shadow-xl border border-foreground/10 h-[320px] md:h-[360px]"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -314,13 +327,13 @@ export const ProjectsSection = () => {
             </div>
 
             {/* Content Overlay */}
-            <div className="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none">
-              <div className="flex justify-between items-start">
+            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between pointer-events-none">
+              <div className="flex justify-between items-start gap-3">
                 <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r ${categoryColors[project.category]} text-white text-xs font-semibold shadow-lg`}>
                   {categoryIcons[project.category]}
                   {project.category}
                 </span>
-                <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rotate-45 group-hover:rotate-0 shadow-lg">
+                <div className="w-12 h-12 shrink-0 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity duration-300 rotate-45 [@media(hover:hover)]:group-hover:rotate-0 shadow-lg" aria-hidden="true">
                   <ArrowUpRight className="w-6 h-6 text-white group-hover:text-black transition-colors" />
                 </div>
               </div>

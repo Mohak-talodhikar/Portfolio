@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
 import {
-  Clock,
+  Timer,
   Mesh,
   OrthographicCamera,
   PlaneGeometry,
@@ -281,7 +281,7 @@ export default function CyberHiveBackground({
     const mesh = new Mesh(geometry, material);
     scene.add(mesh);
 
-    const clock = new Clock();
+    const timer = new Timer();
 
     const setSize = () => {
       if (!active) return;
@@ -335,7 +335,8 @@ export default function CyberHiveBackground({
       if (!active) return;
 
       if (isInView) {
-        uniforms.iTime.value = clock.getElapsedTime();
+        timer.update();
+        uniforms.iTime.value = timer.getElapsed();
 
         if (interactive) {
           currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);

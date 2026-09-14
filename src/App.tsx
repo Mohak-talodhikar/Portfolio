@@ -9,13 +9,16 @@ import { ContactSection } from "./components/ContactSection/ContactSection";
 import { Footer } from "./components/Footer/Footer";
 import ReactLenis from "lenis/react";
 import { Home, User, FolderKanban, GraduationCap, Send } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 
 import Dock from "./components/lightswind/dock";
 import { SmoothCursor } from "./components/lightswind/smooth-cursor";
+import { useReducedFx } from "./hooks/use-reduced-fx";
 
 function App() {
   const [showDock, setShowDock] = useState(false);
+  const { coarse, reducedMotion } = useReducedFx();
+  const showCursorFx = !coarse && !reducedMotion;
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -53,8 +56,9 @@ function App() {
   ];
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="bg-transparent min-h-screen relative overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
-      <SmoothCursor glowEffect showTrail trailLength={4} />
+      {showCursorFx && <SmoothCursor glowEffect showTrail trailLength={4} />}
       <ReactLenis root options={{ smoothWheel: true, duration: 1.2 }}>
         <Header />
 
@@ -92,6 +96,7 @@ function App() {
         </AnimatePresence>
       </ReactLenis>
     </div>
+    </MotionConfig>
   );
 }
 

@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
 
 const technologies = [
-  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", color: "bg-[#3776AB]" },
-  { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg", color: "bg-[#000000]" },
-  { name: "Firebase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg", color: "bg-[#FFCA28]" },
-  { name: "Render", icon: null, color: "bg-[#46E3B7]" },
-  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg", color: "bg-[#FF9900]" },
-  { name: "Netlify", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg", color: "bg-[#00C7B7]" },
-  { name: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg", color: "bg-[#009688]" },
-  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg", color: "bg-[#61DAFB]" },
-  { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg", color: "bg-[#F05032]" },
-  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg", color: "bg-[#181717]" },
-  { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg", color: "bg-[#2496ED]" },
-  { name: "RAG", icon: null, color: "bg-[#8A2BE2]" },
-  { name: "Transformer", icon: null, color: "bg-[#FF3333]" },
-  { name: "HuggingFace", icon: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg", color: "bg-[#F9AB00]" },
-  { name: "LLM", icon: null, color: "bg-[#008000]" },
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", color: "bg-[#3776AB]", fg: "text-white" },
+  { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg", color: "bg-[#000000]", fg: "text-white" },
+  { name: "Firebase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg", color: "bg-[#FFCA28]", fg: "text-slate-950" },
+  { name: "Render", icon: null, color: "bg-[#46E3B7]", fg: "text-slate-950" },
+  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg", color: "bg-[#FF9900]", fg: "text-slate-950" },
+  { name: "Netlify", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg", color: "bg-[#00C7B7]", fg: "text-slate-950" },
+  { name: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg", color: "bg-[#009688]", fg: "text-slate-950" },
+  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg", color: "bg-[#61DAFB]", fg: "text-slate-950" },
+  { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg", color: "bg-[#F05032]", fg: "text-slate-950" },
+  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg", color: "bg-[#181717]", fg: "text-white" },
+  { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg", color: "bg-[#2496ED]", fg: "text-slate-950" },
+  { name: "RAG", icon: null, color: "bg-[#8A2BE2]", fg: "text-white" },
+  { name: "Transformer", icon: null, color: "bg-[#FF3333]", fg: "text-slate-950" },
+  { name: "Hugging Face", icon: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg", color: "bg-[#F9AB00]", fg: "text-slate-950" },
+  { name: "LLM", icon: null, color: "bg-[#008000]", fg: "text-white" },
 ];
 
 const TechStackSection = () => {
@@ -33,11 +33,11 @@ const TechStackSection = () => {
         <div className="absolute right-0 w-32 h-full bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         
         {/* Marquee Animation */}
-        <div className="flex w-max animate-[marquee_35s_linear_infinite] whitespace-nowrap items-center hover:[animation-play-state:paused] py-1">
+        <div className="tech-marquee flex w-max animate-[marquee_35s_linear_infinite] whitespace-nowrap items-center hover:[animation-play-state:paused] py-1">
           {[...technologies, ...technologies].map((tech, i) => (
             <div 
               key={i} 
-              className={`mx-2 px-4 py-2 rounded-lg text-white font-bold text-xs flex items-center gap-2 transition-all hover:scale-105 cursor-default shadow-md shrink-0 ${tech.color}`}
+              className={`mx-2 px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 transition-all hover:scale-105 cursor-default shadow-md shrink-0 ${tech.color} ${tech.fg}`}
             >
               {tech.icon ? (
                 <img 
