@@ -189,7 +189,7 @@ export const specialistNote = {
 export const about = {
   heading: "About Me",
   paragraphs: [
-    "I'm a B.Tech CSE graduate (2022–26) working on applied LLM systems. I built a PDF-grounded RAG API — Python, FastAPI, LangChain, FAISS — and the frontend for a serverless voting app on AWS that 500+ students actually used.",
+    "I'm a B.Tech CSE graduate working on applied LLM systems. I built a PDF-grounded RAG API — Python, FastAPI, LangChain, FAISS — and the frontend for a serverless voting app on AWS that 500+ students actually used.",
     "I work in TypeScript and React when I'm not elbows-deep in vectors. Looking for a full-time AI Engineer role.",
   ],
   facts: [
