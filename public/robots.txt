@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mohak-portfolio-alpha.vercel.app/sitemap.xml

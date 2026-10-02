@@ -1,15 +1,70 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
-  <head >
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Mohak Talodhikar — AI Engineer building grounded RAG chatbots and serverless web apps with Python, FastAPI, FAISS, and AWS." />
-    <meta name="theme-color" content="#0f1014" />
+    <meta
+      name="description"
+      content="Mohak Talodhikar — AI Engineer building grounded RAG chatbots and serverless web apps with Python, FastAPI, FAISS, and AWS."
+    />
+    <link rel="canonical" href="https://mohak-portfolio-alpha.vercel.app/" />
+    <meta name="theme-color" id="theme-color" content="#0B0F19" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      // Set the theme before first paint (brand default: Researcher Midnight Scholar).
+      try {
+        var t = localStorage.getItem("mt-theme");
+        if (t !== "light" && t !== "dark") t = "dark";
+        if (t === "dark") {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+        } else {
+          document.documentElement.classList.add("light");
+          document.documentElement.classList.remove("dark");
+        }
+        document.documentElement.style.colorScheme = t;
+        var m = document.getElementById("theme-color");
+        if (m) m.setAttribute("content", t === "dark" ? "#0B0F19" : "#F8FAFC");
+      } catch (e) {}
+    </script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mohak Talodhikar | AI Engineer" />
+    <meta
+      property="og:description"
+      content="AI Engineer specializing in RAG systems, LLMs, and cloud architecture."
+    />
+    <meta property="og:url" content="https://mohak-portfolio-alpha.vercel.app/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Mohak Talodhikar | AI Engineer" />
+    <meta
+      name="twitter:description"
+      content="AI Engineer specializing in RAG systems, LLMs, and cloud architecture."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mohak Talodhikar",
+        "jobTitle": "AI Engineer",
+        "url": "https://mohak-portfolio-alpha.vercel.app/",
+        "sameAs": [
+          "https://github.com/Mohak-talodhikar",
+          "https://linkedin.com/in/mohak-talodhikar",
+          "https://instagram.com/mohak_talodhikar"
+        ]
+      }
+    </script>
     <title>Mohak Talodhikar | AI Engineer</title>
-  </head> 
+  </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p style="padding: 2rem; font-family: Georgia, serif">
+        Mohak Talodhikar — AI Engineer (RAG systems, LLMs, AWS). Email:
+        mohaktalodhikar@gmail.com
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,103 +1,86 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import Header from "./components/Header/Header";
-import { HeroSection } from "./components/HeroSection/HeroSection";
-import { AboutSection } from "./components/AboutSection/AboutSection";
-import { ProjectsSection } from "./components/ProjectsSection/ProjectsSection";
-import { EducationSection } from "./components/EducationSection/EducationSection";
-import { ContactSection } from "./components/ContactSection/ContactSection";
-import { Footer } from "./components/Footer/Footer";
-import ReactLenis from "lenis/react";
-import { Home, User, FolderKanban, GraduationCap, Send } from "lucide-react";
-import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import Header from "./sections/Header.tsx";
+import Footer from "./sections/Footer.tsx";
+import About from "./sections/About.tsx";
+import Projects from "./sections/Projects.tsx";
+import Skills from "./sections/Skills.tsx";
+import Contact from "./sections/Contact.tsx";
+import Hub from "./pages/Hub.tsx";
+import NotFound from "./pages/NotFound.tsx";
+import { ContactBand } from "./ContactBand.tsx";
+import { RouterProvider, useRouter } from "./router.tsx";
+import type { ReactNode } from "react";
 
-import Dock from "./components/lightswind/dock";
-import { SmoothCursor } from "./components/lightswind/smooth-cursor";
-import { useReducedFx } from "./hooks/use-reduced-fx";
-
-function App() {
-  const [showDock, setShowDock] = useState(false);
-  const { coarse, reducedMotion } = useReducedFx();
-  const showCursorFx = !coarse && !reducedMotion;
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const shouldShow = currentScrollY > lastScrollY && currentScrollY > window.innerHeight * 0.5;
-      const isTop = currentScrollY < window.innerHeight * 0.5;
-
-      if (shouldShow) {
-        setShowDock(true);
-      } else if (isTop) {
-        setShowDock(false);
-      }
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
-  const dockItems = [
-    { icon: <Home size={20} />, label: "Home", onClick: () => scrollToSection("hero") },
-    { icon: <User size={20} />, label: "About", onClick: () => scrollToSection("about") },
-    { icon: <FolderKanban size={20} />, label: "Projects", onClick: () => scrollToSection("projects") },
-    { icon: <GraduationCap size={20} />, label: "Skills", onClick: () => scrollToSection("skills") },
-    { icon: <Send size={20} />, label: "Contact", onClick: () => scrollToSection("contact") },
-  ];
-
-  return (
-    <MotionConfig reducedMotion="user">
-    <div className="bg-transparent min-h-screen relative overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
-      {showCursorFx && <SmoothCursor glowEffect showTrail trailLength={4} />}
-      <ReactLenis root options={{ smoothWheel: true, duration: 1.2 }}>
-        <Header />
-
-        <main className="w-full flex flex-col pt-10 border-none">
-          <HeroSection />
-          <AboutSection />
-          <ProjectsSection />
-          <EducationSection />
-          <ContactSection />
-        </main>
-
-        {/* Footer */}
-        <Footer />
-
-        {/* Floating Dock */}
-        <AnimatePresence>
-          {showDock && (
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="fixed bottom-2 left-0 right-0 z-[999] hidden md:block"
-            >
-              <Dock
-                items={dockItems}
-                panelHeight={56}
-                baseItemSize={44}
-                magnification={66}
-                distance={180}
-                multiBorder
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </ReactLenis>
-    </div>
-    </MotionConfig>
-  );
+function scrollToTop() {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
 }
 
-export default App;
+/** Non-hub pages get top clearance for the fixed header. */
+function PageShell({ children }: { children: ReactNode }) {
+  return <div className="pt-20 md:pt-24">{children}</div>;
+}
+
+function Routes() {
+  const { path, isNotFound } = useRouter();
+
+  if (isNotFound) {
+    return (
+      <PageShell>
+        <NotFound />
+      </PageShell>
+    );
+  }
+
+  switch (path) {
+    case "/about":
+      return (
+        <PageShell>
+          <About />
+          <ContactBand />
+        </PageShell>
+      );
+    case "/projects":
+      return (
+        <PageShell>
+          <Projects />
+          <ContactBand />
+        </PageShell>
+      );
+    case "/skills":
+      return (
+        <PageShell>
+          <Skills />
+          <ContactBand />
+        </PageShell>
+      );
+    case "/contact":
+      return (
+        <PageShell>
+          <Contact />
+        </PageShell>
+      );
+    case "/":
+    default:
+      return <Hub />;
+  }
+}
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-accent-ink"
+      >
+        Skip to content
+      </a>
+      <RouterProvider>
+        <Header />
+        <main id="main-content">
+          <Routes />
+        </main>
+        <Footer onBackToTop={scrollToTop} />
+      </RouterProvider>
+    </div>
+  );
+}
