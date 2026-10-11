@@ -28,8 +28,8 @@ function initialTheme(): Theme {
   } catch {
     /* storage unavailable */
   }
-  // Brand default: Deep Obsidian & Electric Violet
-  return "dark";
+  // Brand default: light paper (daylight recruiters); stored choice wins.
+  return "light";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -43,7 +43,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     const meta = document.getElementById("theme-color");
     if (meta) {
-      meta.setAttribute("content", theme === "dark" ? "#0B0F19" : "#F8FAFC");
+      meta.setAttribute("content", theme === "dark" ? "#050B14" : "#F7F5F0");
     }
 
     try {

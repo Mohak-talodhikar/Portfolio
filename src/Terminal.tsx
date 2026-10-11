@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 /**
  * Static RAG-pipeline snippet in a window card. Pure colored text —
  * zero JavaScript, zero animation, zero GPU. The recruiter magnet.
@@ -51,7 +53,7 @@ const lines: { tokens: { text: string; className: string }[] }[] = [
   { tokens: [{ text: "", className: "" }] },
   {
     tokens: [
-      { text: "# grounded, cited, no hallucinations", className: "text-muted" },
+      { text: "# grounded, cited, no hallucinations", className: "text-code-green" },
     ],
   },
 ];
@@ -59,8 +61,54 @@ const lines: { tokens: { text: string; className: string }[] }[] = [
 export function Terminal() {
   // Fixed dark window chrome in both themes: a code window that turns
   // paper-white would look broken. Values are intentional literals.
+
+  // Lines type out once when scrolled into view (~110ms each). Reduced
+  // motion (or no IntersectionObserver) shows the full listing at once.
+  // The role="img" label below describes the whole snippet, so the
+  // progressive reveal is decorative and never announced piecemeal.
+  const [shown, setShown] = useState(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? lines.length
+      : 0
+  );
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (shown >= lines.length) return;
+    const el = ref.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setShown(lines.length);
+      return;
+    }
+    let timer = 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        observer.disconnect();
+        timer = window.setInterval(() => {
+          setShown((s) => {
+            if (s >= lines.length) {
+              window.clearInterval(timer);
+              return s;
+            }
+            return s + 1;
+          });
+        }, 140);
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (timer) window.clearInterval(timer);
+    };
+  }, [shown >= lines.length]);
+
   return (
     <div
+      ref={ref}
       role="img"
       aria-label="Code snippet showing a RAG pipeline: load PDFs, index with FAISS, search, and generate a grounded answer"
       className="rounded-lg border border-[#2A2F3A] bg-[#14181F] shadow-md overflow-hidden text-left"
@@ -73,7 +121,7 @@ export function Terminal() {
       </div>
       <pre className="p-5 font-mono text-[13px] leading-[1.7] overflow-x-auto text-[#F2F4F8]">
         <code>
-          {lines.map((line, i) => (
+          {lines.slice(0, shown).map((line, i) => (
             <span key={i} className="block min-h-[1.7em]">
               {line.tokens.map((token, j) => (
                 <span
@@ -91,6 +139,11 @@ export function Terminal() {
               ))}
             </span>
           ))}
+          {shown >= lines.length ? (
+            <span className="block min-h-[1.7em]">
+              <span className="term-caret" aria-hidden="true" />
+            </span>
+          ) : null}
         </code>
       </pre>
     </div>

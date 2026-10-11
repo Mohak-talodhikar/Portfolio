@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# AI assistant skills (local tooling — not part of the site, and must
+# stay out of Tailwind's content scan as well as git)
+.opencode/
+.agents/

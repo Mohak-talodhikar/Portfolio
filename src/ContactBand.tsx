@@ -1,5 +1,6 @@
 import { profile } from "./data.ts";
 import { Link } from "./router.tsx";
+import { CopyEmail } from "./CopyEmail.tsx";
 import { MailIcon, ArrowRightIcon } from "./icons.tsx";
 
 /**
@@ -21,7 +22,8 @@ export function ContactBand() {
             Like what you see?
           </h2>
           <p className="mt-1 text-sm text-muted">
-            Email is fastest — I read every message.
+            Email is fastest — I read every message, and usually reply
+            within a day.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
@@ -34,10 +36,12 @@ export function ContactBand() {
           </a>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded-md border border-border text-sm font-semibold px-5 h-11 hover:border-accent hover:text-accent transition-colors"
+            className="group inline-flex items-center gap-2 rounded-md border border-border text-sm font-semibold px-5 h-11 hover:border-accent hover:text-accent transition-colors"
           >
-            Contact page <ArrowRightIcon className="w-4 h-4" />
+            Contact page{" "}
+            <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
+          <CopyEmail className="inline-flex items-center rounded-md border border-border text-sm font-semibold px-4 h-11 hover:border-accent hover:text-accent transition-colors" />
         </div>
       </div>
     </section>

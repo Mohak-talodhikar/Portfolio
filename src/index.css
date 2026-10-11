@@ -13,6 +13,8 @@
   --color-accent: var(--accent);
   --color-accent-deep: var(--accent-deep);
   --color-accent-ink: var(--accent-ink);
+  --color-proof: var(--proof);
+  --color-status: var(--status);
   --color-border: var(--border);
   --color-code-green: #7ee2a8;
   --color-code-gold: #e8c468;
@@ -20,31 +22,92 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RESEARCHER THEME (ACADEMIC PROFESSIONAL & SCIENTIFIC LAB)
-   Midnight Scholar canvas with Royal Cobalt citation accent,
-   and an Archival Manuscript Paper light mode with Oxford Blue ink.
+   BLUE-GREEN DUOTONE — abyss/paper canvas, two hue families:
+   blue = action/nav, green = proof/evidence/success. Gold retired
+   (survives only in terminal syntax colors). Rounded corners +
+   transitions retained.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --bg: #0b0f19;
-  --surface: #121826;
-  --fg: #f1f5f9;
-  --muted-fg: #8596b0;
-  --accent: #3b82f6;
-  --accent-deep: #2563eb;
-  --accent-ink: #ffffff;
-  --border: #1e293b;
-}
-
-html.light {
-  --bg: #f8fafc;
+  --bg: #f7f5f0;
   --surface: #ffffff;
-  --fg: #0f172a;
-  --muted-fg: #475569;
+  --fg: #16181d;
+  --muted-fg: #5c6470;
   --accent: #1d4ed8;
   --accent-deep: #1e40af;
   --accent-ink: #ffffff;
-  --border: #cbd5e1;
+  --proof: #15803d;
+  --status: #15803d;
+  --border: #e2dccb;
+}
+
+html.dark {
+  --bg: #050b14;
+  --surface: #101823;
+  --fg: #e8eef2;
+  --muted-fg: #94a3b8;
+  --accent: #5b9cff;
+  --accent-deep: #7db3ff;
+  --accent-ink: #0a1530;
+  --proof: #34d399;
+  --status: #34d399;
+  --border: #1e2a24;
+}
+
+/* Highlighter mark for the single focal claim per viewport. The green
+   marker paints left→right during the hero entrance (sweep keyframe). */
+.mark {
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--proof) 55%, transparent) 0%,
+    color-mix(in srgb, var(--proof) 55%, transparent) 38%,
+    transparent 38%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0 0.08em;
+  animation: mark-sweep 0.6s ease-out 0.5s backwards;
+}
+
+@keyframes mark-sweep {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+/* Route-change fade: remounted by key in App.tsx so every navigation
+   replays this quiet 0.25s settle. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.page-in {
+  animation: page-in 0.25s ease-out;
+}
+
+/* Mobile menu entrance — conditionally mounted, so mount replay is free. */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.menu-in {
+  animation: menu-in 0.2s ease-out;
+}
+
+/* Check-icon pop when a copy lands. */
+@keyframes check-in {
+  from {
+    transform: scale(0.6);
+  }
+}
+
+.check-in {
+  animation: check-in 0.25s ease-out;
 }
 
 @layer base {
@@ -57,6 +120,7 @@ html.light {
     color: var(--color-foreground);
     font-family: var(--font-sans);
     min-height: 100vh;
+    min-height: 100dvh;
     padding-top: env(safe-area-inset-top);
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
@@ -81,6 +145,15 @@ html.light {
     outline-offset: 2px;
     border-radius: 4px;
   }
+
+  /* Route-change focus target: headings receive programmatic focus so
+     screen readers land at the page start, but they are never in the
+     Tab order — so the ring is suppressed here and kept everywhere
+     a keyboard user can actually Tab to. */
+  main h1:focus,
+  main h2:focus {
+    outline: none;
+  }
 }
 
 /* Editorial small-caps label: mono, uppercase, widely tracked. */
@@ -92,38 +165,35 @@ html.light {
   text-transform: uppercase;
 }
 
-/* Ambient radial glow for hero — subtle scholarly atmospheric backlight */
-.hero-glow {
-  position: absolute;
-  top: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(850px, 94vw);
-  height: 440px;
-  background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 68%);
-  opacity: 0.13;
-  filter: blur(85px);
-  border-radius: 9999px;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-html.light .hero-glow {
-  opacity: 0.05;
-  filter: blur(100px);
-}
-
-/* Dot-grid texture harmonizing with active theme borders */
+/* Visible grid texture for the hero — thin lines that follow the theme
+   (ink on paper, chalk on abyss), pure background paint, zero cost. */
 .dot-grid {
-  background-image: radial-gradient(var(--border) 1.2px, transparent 1.2px);
-  background-size: 26px 26px;
-  opacity: 0.85;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-/* Scroll reveal — fade only (no slide/lift, per the motion philosophy). */
+/* Hero entrance: one orchestrated load moment. Elements settle in
+   sequence via staggered delays; the terminal types out as the finale.
+   Pure CSS — no observers, no JS timing. Disabled under reduced-motion. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.hero-in {
+  animation: hero-in 0.5s ease-out backwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+/* Scroll reveal — a single quiet fade per region. No stagger, no
+   per-item choreography; the hero owns the spotlight. */
 .js .reveal {
   opacity: 0;
-  transition: opacity 0.6s ease-out;
+  transition: opacity 0.4s ease-out;
   transition-delay: var(--reveal-delay, 0ms);
 }
 
@@ -131,11 +201,31 @@ html.light .hero-glow {
   opacity: 1;
 }
 
+/* Copy-button success pop: single 200ms pulse on state change. */
+.copy-pop {
+  animation: copy-pop 0.2s ease-out;
+}
+
+@keyframes copy-pop {
+  50% {
+    transform: scale(1.06);
+  }
+}
+
 /* Blinking caret for the typing line. Static under reduced-motion. */
 .caret::after {
   content: "▍";
   margin-left: 2px;
   color: var(--color-accent);
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+
+/* Terminal block cursor — green to match the code chrome, appears
+   after the listing finishes typing. */
+.term-caret::after {
+  content: "▍";
+  margin-left: 2px;
+  color: var(--color-code-green);
   animation: caret-blink 1.1s steps(1) infinite;
 }
 
@@ -152,7 +242,8 @@ section[id]:not(#hero) {
 }
 
 /* Fixed header overlays section tops on anchor jumps — reserve clearance. */
-section[id] {
+section[id],
+article[id] {
   scroll-margin-top: 5.5rem;
 }
 
@@ -162,8 +253,9 @@ section[id] {
   }
 
   body,
-  .hero-glow {
+  .hero-in {
     transition: none;
+    animation: none;
   }
 
   .js .reveal {
@@ -171,7 +263,16 @@ section[id] {
     transition: none;
   }
 
-  .caret::after {
+  .copy-pop,
+  .page-in,
+  .mark,
+  .menu-in,
+  .check-in {
+    animation: none;
+  }
+
+  .caret::after,
+  .term-caret::after {
     animation: none;
     opacity: 1;
   }

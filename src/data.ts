@@ -7,9 +7,12 @@
 export const profile = {
   name: "Mohak Talodhikar",
   role: "AI Engineer",
+  thesis:
+    "Most RAG demos send your documents to someone else's cloud. Mine runs fully offline.",
+  thesisMark: "Mine runs fully offline.",
   tagline:
-    "I build chatbots that answer from your documents — not from thin air. Python, FastAPI, and FAISS on the backend; currently looking for a full-time AI Engineer role.",
-  availability: "Open to work · Replies within a day",
+    "I build chatbots that answer from your documents — not from thin air. Python, FastAPI, FAISS.",
+  availability: "Open to work",
   email: "mohaktalodhikar@gmail.com",
   location: "Telangana, India",
   resume: "/resume.pdf",
@@ -54,6 +57,12 @@ export const contactLinks: Social[] = [
   },
 ];
 
+export const proofStrip = [
+  { value: "500+", label: "students served" },
+  { value: "$0", label: "API cost" },
+  { value: "100%", label: "offline" },
+];
+
 export const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
@@ -68,8 +77,6 @@ export const proofPoints = [
   "Built a PDF-grounded RAG API with Python, FastAPI, LangChain, and FAISS",
   "Shipped a serverless voting app on AWS used by 500+ students",
 ];
-
-export const techPills = ["Python", "RAG", "LLMs", "AWS", "FastAPI", "React"];
 
 /** Cycled by the hero typing line (module-level = stable reference). */
 export const typingRoles = [
@@ -162,21 +169,46 @@ export const projects: Project[] = [
   },
 ];
 
-export const skillGroups = [
+export interface Skill {
+  name: string;
+  /** 0-based index into `projects` — renders the chip as a link to that dossier. */
+  project?: number;
+}
+
+/** Categories ordered AI-first for AI/GenAI Engineer roles.
+ *  `project` indexes must reference real dossiers — never fictional links. */
+export const skillCategories: { title: string; skills: Skill[] }[] = [
   {
-    title: "Proficient",
-    skills: ["Python", "React / TypeScript", "FastAPI", "RAG Systems & LLMs", "AWS"],
+    title: "Generative AI & RAG",
+    skills: [
+      { name: "RAG Systems & LLMs", project: 0 },
+      { name: "FAISS", project: 0 },
+      { name: "Hugging Face", project: 0 },
+      { name: "LangChain", project: 0 },
+      { name: "Google Gemini APIs", project: 1 },
+    ],
   },
   {
-    title: "Familiar",
+    title: "Programming & Backend",
     skills: [
-      "Docker",
-      "Hugging Face",
-      "FAISS",
-      "Git & GitHub",
-      "n8n Automation",
-      "Firebase",
-      "Google Gemini APIs",
+      { name: "Python", project: 0 },
+      { name: "FastAPI", project: 0 },
+      { name: "React / TypeScript", project: 1 },
+    ],
+  },
+  {
+    title: "Cloud & Deployment",
+    skills: [
+      { name: "AWS", project: 2 },
+      { name: "Docker" },
+      { name: "Firebase", project: 1 },
+    ],
+  },
+  {
+    title: "Tools & Frameworks",
+    skills: [
+      { name: "Git & GitHub" },
+      { name: "n8n Automation" },
     ],
   },
 ];
@@ -190,7 +222,7 @@ export const about = {
   heading: "About Me",
   paragraphs: [
     "I'm a B.Tech CSE graduate working on applied LLM systems. I built a PDF-grounded RAG API — Python, FastAPI, LangChain, FAISS — and the frontend for a serverless voting app on AWS that 500+ students actually used.",
-    "I work in TypeScript and React when I'm not elbows-deep in vectors. Looking for a full-time AI Engineer role.",
+    "I work in TypeScript and React when I'm not elbows-deep in vectors. I care more about systems that work without internet than demos that impress on Wi-Fi. Looking for a full-time AI Engineer role.",
   ],
   facts: [
     { label: "Specialty", value: "RAG Systems & LLMs" },

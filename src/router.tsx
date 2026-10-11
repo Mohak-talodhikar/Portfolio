@@ -88,16 +88,42 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: reduced ? "auto" : "instant" });
 }
 
+/**
+ * Scroll to a hash target. `content-visibility: auto` sections report a
+ * placeholder height until rendered, which throws off fragment offsets
+ * on cross-page arrivals — force the containing section to real size
+ * first so the scroll lands on the element, not mid-section.
+ */
+function scrollToTarget(el: HTMLElement, behavior: ScrollBehavior) {
+  const section = el.closest("section");
+  if (section instanceof HTMLElement) {
+    section.style.contentVisibility = "visible";
+  }
+  el.scrollIntoView({ behavior });
+}
+
 export function RouterProvider({ children }: { children: ReactNode }) {
   const [path, setPath] = useState(currentPath);
 
   const navigate = useCallback((to: string) => {
-    if (to === window.location.pathname) {
+    const [pathname, hash] = to.split("#");
+    // Same-page navigation: scroll to the hash target (or top) in place.
+    if (pathname === window.location.pathname) {
+      const el = hash ? document.getElementById(hash) : null;
+      if (el) {
+        scrollToTarget(
+          el,
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth"
+        );
+        return;
+      }
       scrollToTop();
       return;
     }
     window.history.pushState(null, "", to);
-    setPath(to);
+    setPath(pathname);
   }, []);
 
   useEffect(() => {
@@ -108,7 +134,14 @@ export function RouterProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     applyRouteMeta(path);
-    scrollToTop();
+    // Deep link: land on the hash target when present, else the top.
+    const hash = window.location.hash.slice(1);
+    const target = hash ? document.getElementById(hash) : null;
+    if (target) {
+      scrollToTarget(target, "auto");
+    } else {
+      scrollToTop();
+    }
     // Move focus to the page heading so keyboard and screen-reader
     // users land at the start of the new page, not the top chrome.
     const heading = document.querySelector("main h1, main h2");

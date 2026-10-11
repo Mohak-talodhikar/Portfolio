@@ -9,13 +9,13 @@
       content="Mohak Talodhikar — AI Engineer building grounded RAG chatbots and serverless web apps with Python, FastAPI, FAISS, and AWS."
     />
     <link rel="canonical" href="https://mohak-portfolio-alpha.vercel.app/" />
-    <meta name="theme-color" id="theme-color" content="#0B0F19" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" id="theme-color" content="#F7F5F0" />
+    <meta name="color-scheme" content="light dark" />
     <script>
-      // Set the theme before first paint (brand default: Researcher Midnight Scholar).
+      // Set the theme before first paint (brand default: light paper).
       try {
         var t = localStorage.getItem("mt-theme");
-        if (t !== "light" && t !== "dark") t = "dark";
+        if (t !== "light" && t !== "dark") t = "light";
         if (t === "dark") {
           document.documentElement.classList.add("dark");
           document.documentElement.classList.remove("light");
@@ -25,7 +25,7 @@
         }
         document.documentElement.style.colorScheme = t;
         var m = document.getElementById("theme-color");
-        if (m) m.setAttribute("content", t === "dark" ? "#0B0F19" : "#F8FAFC");
+        if (m) m.setAttribute("content", t === "dark" ? "#050B14" : "#F7F5F0");
       } catch (e) {}
     </script>
     <meta property="og:type" content="website" />

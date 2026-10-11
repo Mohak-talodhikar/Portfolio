@@ -4,7 +4,6 @@ import { ContactBand } from "../ContactBand.tsx";
 import { Link } from "../router.tsx";
 import { ArrowRightIcon } from "../icons.tsx";
 import {
-  about,
   projects,
   contact,
   techStack,
@@ -16,18 +15,16 @@ function Teaser({
   to,
   title,
   text,
-  delay,
 }: {
   to: string;
   title: string;
   text: string;
-  delay: number;
 }) {
   return (
-    <Reveal delay={delay}>
+    <Reveal>
       <Link
         to={to}
-        className="group block h-full rounded-lg border border-border bg-surface p-6 hover:border-accent/50 transition-colors"
+        className="group block h-full rounded-lg border border-border bg-surface p-6 hover:border-accent/50 hover:-translate-y-0.5 transition-all duration-200"
         ariaLabel={`${title} — open page`}
       >
         <span className="flex items-center justify-between gap-3">
@@ -62,26 +59,22 @@ export default function Hub() {
             <Teaser
               to="/about"
               title="About"
-              text={`${about.facts[0].value} · ${about.facts[1].value} · ${about.facts[3].value}`}
-              delay={0}
+              text="B.Tech CSE graduate — RAG systems and LLMs, open to work from Telangana, India"
             />
             <Teaser
               to="/projects"
               title="Projects"
               text={`${projects.length} case studies with problem, method, and outcomes`}
-              delay={80}
             />
             <Teaser
               to="/skills"
               title="Skills"
               text={techStack}
-              delay={160}
             />
             <Teaser
               to="/contact"
               title="Contact"
               text={contact.text}
-              delay={240}
             />
           </div>
         </div>
@@ -89,10 +82,9 @@ export default function Hub() {
       <section aria-labelledby="hub-featured" className="border-t border-border">
         <div className="max-w-5xl mx-auto px-6 py-16 md:py-20">
           <Reveal>
-            <p className="small-caps text-accent">Featured work</p>
             <h2
               id="hub-featured"
-              className="mt-2 font-display text-2xl md:text-3xl font-semibold tracking-tight"
+              className="font-display text-2xl md:text-3xl font-semibold tracking-tight"
             >
               {featured.title}
             </h2>
@@ -100,12 +92,24 @@ export default function Hub() {
             <p className="mt-3 text-muted leading-relaxed max-w-2xl">
               {featured.problem}
             </p>
-            <Link
-              to="/projects"
-              className="mt-5 inline-flex items-center gap-2 rounded-md border border-border font-medium px-6 h-11 hover:border-accent hover:text-accent transition-colors"
-            >
-              View all work <ArrowRightIcon className="w-4 h-4" />
-            </Link>
+            <div className="mt-5 flex flex-wrap items-center gap-4">
+              <Link
+                to="/projects"
+                className="group inline-flex items-center gap-2 rounded-md border border-border font-medium px-6 h-11 hover:border-accent hover:text-accent transition-colors"
+              >
+                Read the RAG case study{" "}
+                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+              <a
+                href={featured.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open RAG ChatBot repository on GitHub"
+                className="inline-flex items-center font-mono text-sm text-accent hover:underline underline-offset-4 min-h-[44px]"
+              >
+                [source]
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>

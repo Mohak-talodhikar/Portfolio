@@ -12,26 +12,33 @@
 | Layout | Stacked sections; project case-study panels (Problem / Role / Method / Outcomes) |
 | Color | Signal Violet on near-black lab canvas |
 | Content | Existing `data.ts` + resume facts; no invented metrics |
-| Motion | Typing line + fades + hovers only (~10%) |
+| Motion | Typing lines + fades + hovers + terminal type-out + stat count-ups + row cascades + copy feedback (~30%, all one-shot and reduced-motion gated) |
 | Routing | Hand-rolled (`src/router.tsx`), clean paths, hub home (BUILT) |
 | Theming | Dual dark (default) + light, manual toggle, remembered (BUILT — see §9) |
 
 ## 2. Color tokens (`src/index.css`)
 
-Researcher theme: Academic Professional & Scientific Authority. Midnight Scholar canvas with Royal Cobalt citation accent, paired with an Archival Manuscript Paper light mode with Oxford Blue ink (matching LaTeX `\definecolor{ResumeLink}{HTML}{1A3A8F}`).
+Light professional, three hues with fixed jobs: blue = action/nav,
+gold = proof/evidence, green = live/success. Dark partner keeps the
+same three jobs. Rounded corners + transitions retained.
 
-| Token | Dark (Default: Midnight Scholar) | Light (Archival Paper Mode) | Role |
+| Token | Light (Default: Paper) | Dark (Abyss Partner) | Role |
 |---|---|---|---|
-| `background` | `#0B0F19` (Midnight Scholar Navy) | `#F8FAFC` (Archival Manuscript Paper) | Page background canvas |
-| `surface` | `#121826` (Academic Console Card) | `#FFFFFF` (Crisp White Card) | Card surfaces |
-| `foreground` | `#F1F5F9` (Paper White) | `#0F172A` (Deep Sumi Navy Ink) | High-contrast body & headings |
-| `muted` | `#8596B0` (Scholar Slate) | `#475569` (Academic Slate) | Secondary text & citations |
-| `accent` | `#3B82F6` (Royal Cobalt / Citation Blue) | `#1D4ED8` (Oxford Academic Blue) | Interactive links, kickers, highlights |
-| `accent-deep` | `#2563EB` (Deep Royal Blue) | `#1E40AF` (Deep Academic Navy) | Button hover states |
-| `accent-ink` | `#FFFFFF` (Pure White) | `#FFFFFF` (Pure White) | Text on solid accent button fills |
-| `border` | `#1E293B` (Slate Hairline) | `#CBD5E1` (Manuscript Rule) | Structural borders & card outlines |
+| `background` | `#F7F5F0` (Warm Paper) | `#050B14` (Deep Abyss) | Page background canvas |
+| `surface` | `#FFFFFF` (Cards) | `#101823` (Console Charcoal) | Card surfaces |
+| `foreground` | `#16181D` (Ink) | `#E8EEF2` (Chalk White) | High-contrast body & headings |
+| `muted` | `#5C6470` | `#94A3B8` | Secondary text & citations |
+| `accent` | `#1D4ED8` (Action Blue) | `#5B9CFF` (Bright Action Blue) | Interactive links, kickers, highlights |
+| `proof` | `#15803D` (Growth Green) | `#34D399` (Mint Success) | Proof only: thesis mark, strip numerals, stats, outcomes, quote mark |
+| `status` | `#15803D` (Live Green) | `#34D399` (Mint Success) | Availability + Open-to-work ONLY |
+| `accent-deep` | `#1E40AF` | `#7DB3FF` | Button hover states |
+| `accent-ink` | `#FFFFFF` (Pure White) | `#0A1530` (Dark Ink) | Text on solid accent button fills |
+| `border` | `#E2DCCB` (Warm Hairline) | `#1E2A24` (Dark Outline) | Structural borders & card outlines |
 
-Verified contrast: Dark foreground ~16.5:1, dark muted ~6.2:1, dark accent ~6.8:1. Light foreground ~17.5:1, light muted ~7.2:1, light accent ~6.5:1. Terminal maintains fixed dark chrome as an authentic developer artifact.
+Verified contrast (measured live): light blue 6.15:1, light gold
+5.44:1, dark blue 7.18:1, dark gold 11.77:1. Terminal maintains fixed
+dark chrome as an authentic developer artifact. Hero texture is thin
+grid lines (pure background paint, zero animation).
 
 ## 3. Type inventory (7 files, latin-only)
 
@@ -42,7 +49,7 @@ Verified contrast: Dark foreground ~16.5:1, dark muted ~6.2:1, dark accent ~6.8:
 ## 4. Buttons & links
 
 - **Primary CTAs** (View Projects, Get in Touch, Download Resume):
-  violet solid `rounded-md`, accent-ink text, hover `accent-deep`.
+  green solid `rounded-md`, accent-ink text, hover `accent-deep`.
 - **Repo links**: mono bracket style `[source]` in accent, underline on
   hover, `aria-label` naming the repo. Project title links stay as the
   second path (intentional redundancy for skimmers).
@@ -139,4 +146,44 @@ Verified: zero hard-coded theme colors in `src/`, so all components instantly re
 ## 8. Standing non-goals
 
 No invented metrics · no WebGL/canvas/rAF libs · no third font family ·
-no light theme · no photo · fake career timeline stays out.
+no photo · fake career timeline stays out.
+
+## 10. Distill pass (current — supersedes older motion/label notes)
+
+Theme/tokens unchanged (paper `#F7F5F0` ↔ abyss `#050B14`, blue=action,
+green=proof). What changed:
+
+- **Eyebrow policy:** `.small-caps` is a *data label* only (stat/fact
+  `dt`s, category, panel titles, legend, copyright, 404) — never above
+  page headings. Chapter I/II/III, "Next chapter", "Featured work"
+  removed. No middle-dot meta strings; availability is "Open to work".
+- **Case panels:** unnumbered (icon + title); Problem/Role/Method/
+  Outcomes is a fixed structure, not a sequence.
+- **Motion (~30%):** ONE orchestrated hero entrance (pure-CSS
+  `hero-in` stagger: status→name→typed line→thesis→stats→CTAs→socials,
+  terminal fades in at 200ms and types 9 lines at 140ms/line as the
+  finale — final comment in proof green). Below-fold sections: uniform
+  0.4s fade, no stagger, no row cascades. Kept: typing roles + caret,
+  About stat count-up, copy-pop, scroll hairline, card hovers
+  (border/color only — no translate). All reduced-motion gated.
+- **Removed:** `.hero-glow` radial wash; hero grid now theme-aware
+  (ink 5% on paper, chalk 5% on abyss). Hub featured gained a `[source]`
+  GitHub link (no live demos exist — nothing deployed).
+- **Added (all one-shot, CSS-first, reduced-motion gated, verified):**
+  route-change `page-in` fade (keyed remount in App) · `.mark`
+  highlighter sweep (background-size 0→100%, 0.5s delay) · CTA arrow
+  nudges (`group-hover:translate-x-0.5`) · mobile `menu-in` slide ·
+  copy `check-in` scale-pop · terminal green block cursor
+  (`.term-caret`, appears after typing) · tech-chip + social-icon
+  hover lifts.
+- **Skills (redesigned):** `skillGroups` (Proficient/Familiar) replaced
+  by `skillCategories` — Generative AI & RAG · Programming & Backend ·
+  Cloud & Deployment · Tools & Frameworks (AI-first; no empty 5th
+  bucket). 13 real skills (LangChain added from proofPoints), chips
+  with project evidence link to `/projects#dossier-N` (router is now
+  hash-aware: strips hash for state, scrolls to target); Docker,
+  Git & GitHub, n8n stay unlinked — no fictional links. Specialist
+  blockquote kept. Dead `techPills` export removed.
+- **Budgets (verified):** JS 231.45KB · CSS 29.26KB · zero new deps.
+  DOM-verified: all 8 effects animate, replay on navigation, and
+  disable under reduced-motion; 0px mobile overflow on all 5 routes.

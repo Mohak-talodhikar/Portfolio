@@ -65,6 +65,18 @@ function Routes() {
   }
 }
 
+/** Main content keyed by path so every navigation replays the fade. */
+function AnimatedMain() {
+  const { path } = useRouter();
+  return (
+    <main id="main-content">
+      <div key={path} className="page-in">
+        <Routes />
+      </div>
+    </main>
+  );
+}
+
 export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -76,9 +88,7 @@ export default function App() {
       </a>
       <RouterProvider>
         <Header />
-        <main id="main-content">
-          <Routes />
-        </main>
+        <AnimatedMain />
         <Footer onBackToTop={scrollToTop} />
       </RouterProvider>
     </div>

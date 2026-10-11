@@ -53,7 +53,7 @@ export default function Footer({ onBackToTop }: { onBackToTop: () => void }) {
                 target={social.external ? "_blank" : undefined}
                 rel={social.external ? "noopener noreferrer" : undefined}
                 aria-label={social.label}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-muted hover:text-accent transition-colors"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-muted hover:text-accent hover:-translate-y-0.5 transition-all duration-150"
               >
                 {Icon ? <Icon className="w-4 h-4" /> : null}
               </a>

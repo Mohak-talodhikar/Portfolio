@@ -5,6 +5,8 @@ interface RevealProps {
   className?: string;
   /** Stagger delay in ms for grouped entrances. */
   delay?: number;
+  /** Fired once when the wrapped content first enters the viewport. */
+  onVisible?: () => void;
 }
 
 /**
@@ -12,14 +14,17 @@ interface RevealProps {
  * when content enters the viewport. No slide, no lift, no bounce.
  * Content stays visible with no JS and under reduced-motion (see CSS).
  */
-export function Reveal({ children, className = "", delay = 0 }: RevealProps) {
+export function Reveal({ children, className = "", delay = 0, onVisible }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const visibleRef = useRef(onVisible);
+  visibleRef.current = onVisible;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
       el.classList.add("is-visible");
+      visibleRef.current?.();
       return;
     }
     const observer = new IntersectionObserver(
@@ -27,6 +32,7 @@ export function Reveal({ children, className = "", delay = 0 }: RevealProps) {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+            visibleRef.current?.();
             observer.unobserve(entry.target);
           }
         }

@@ -1,11 +1,9 @@
 import {
   profile,
   heroSocials,
-  techPills,
-  proofPoints,
+  proofStrip,
   typingRoles,
 } from "../data.ts";
-import { Reveal } from "../Reveal.tsx";
 import { Link } from "../router.tsx";
 import { Terminal } from "../Terminal.tsx";
 import { useTyping } from "../useTyping.ts";
@@ -17,7 +15,7 @@ import {
   ArrowRightIcon,
   DownloadIcon,
 } from "../icons.tsx";
-import type { ComponentType } from "react";
+import type { ComponentType, CSSProperties, ReactNode } from "react";
 
 const socialIcons: Record<string, ComponentType<{ className?: string }>> = {
   GitHub: GitHubIcon,
@@ -25,6 +23,26 @@ const socialIcons: Record<string, ComponentType<{ className?: string }>> = {
   Instagram: InstagramIcon,
   Email: MailIcon,
 };
+
+/** One entrance slot in the hero's orchestrated load sequence. */
+function HeroIn({
+  delay = 0,
+  className = "",
+  children,
+}: {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={`hero-in ${className}`}
+      style={{ "--hero-delay": `${delay}ms` } as CSSProperties}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Hero() {
   const { text: typedRole, active } = useTyping(typingRoles);
@@ -36,17 +54,16 @@ export default function Hero() {
       className="relative overflow-hidden pt-32 md:pt-44 pb-20 md:pb-28"
     >
       <div aria-hidden="true" className="dot-grid absolute inset-0 pointer-events-none" />
-      <div aria-hidden="true" className="hero-glow" />
       <div className="relative max-w-5xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
         <div className="text-center lg:text-left">
-          <Reveal>
-            <p className="small-caps text-accent">{profile.availability}</p>
-            <p className="mt-6 font-display text-2xl md:text-3xl text-muted">
-              Hi, I&rsquo;m
+          <HeroIn>
+            <p className="small-caps text-status inline-flex items-center gap-2">
+              <span aria-hidden="true" className="w-2 h-2 rounded-full bg-status" />
+              {profile.availability}
             </p>
             <h1
               id="hero-name"
-              className="mt-2 font-display text-[2.75rem] leading-[1.1] md:text-7xl tracking-[-0.02em]"
+              className="mt-6 font-display text-[clamp(3.5rem,8vw,7rem)] leading-[1.05] tracking-[-0.03em]"
             >
               {profile.name}
             </h1>
@@ -60,38 +77,39 @@ export default function Hero() {
                 . Specializations: {typingRoles.join(", ")}.
               </span>
             </p>
-          </Reveal>
+          </HeroIn>
 
-          <Reveal delay={120}>
+          <HeroIn delay={140}>
+            <p className="mt-6 font-display text-xl md:text-2xl leading-snug max-w-xl mx-auto lg:mx-0">
+              {profile.thesis.split(profile.thesisMark)[0]}
+              <span className="mark">{profile.thesisMark}</span>
+            </p>
             <p className="mt-5 text-base md:text-lg text-muted leading-relaxed max-w-xl mx-auto lg:mx-0">
               {profile.tagline}
             </p>
-          </Reveal>
+          </HeroIn>
 
-          <Reveal delay={200}>
-            <ul className="mt-7 space-y-2.5 text-left max-w-xl mx-auto lg:mx-0">
-              {proofPoints.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-3 text-sm md:text-base"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-[9px] w-1.5 h-1.5 shrink-0 rounded-full bg-accent"
-                  />
-                  {point}
-                </li>
+          <HeroIn delay={240}>
+            <dl className="mt-7 flex flex-wrap gap-x-8 gap-y-3 justify-center lg:justify-start">
+              {proofStrip.map((item) => (
+                <div key={item.label} className="flex items-baseline gap-2">
+                  <dd className="font-display text-2xl md:text-3xl text-proof">
+                    {item.value}
+                  </dd>
+                  <dt className="small-caps text-muted">{item.label}</dt>
+                </div>
               ))}
-            </ul>
-          </Reveal>
+            </dl>
+          </HeroIn>
 
-          <Reveal delay={280}>
+          <HeroIn delay={320}>
             <div className="mt-8 flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-3">
               <Link
                 to="/projects"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-ink font-medium px-7 min-h-[44px] min-w-[200px] hover:bg-accent-deep transition-colors"
+                className="group inline-flex items-center justify-center gap-2 rounded-md bg-accent text-accent-ink font-medium px-7 min-h-[44px] min-w-[200px] hover:bg-accent-deep transition-colors"
               >
-                View Projects <ArrowRightIcon className="w-4 h-4" />
+                View Projects{" "}
+                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <a
                 href={profile.resume}
@@ -101,22 +119,9 @@ export default function Hero() {
                 Download Resume <DownloadIcon className="w-4 h-4" />
               </a>
             </div>
-          </Reveal>
+          </HeroIn>
 
-          <Reveal delay={340}>
-            <div className="mt-7 flex flex-wrap gap-2 justify-center lg:justify-start">
-              {techPills.map((pill) => (
-                <span
-                  key={pill}
-                  className="small-caps px-3 py-1.5 rounded-md border border-border bg-surface text-muted"
-                >
-                  {pill}
-                </span>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={400}>
+          <HeroIn delay={400}>
             <div className="mt-6 flex items-center justify-center lg:justify-start gap-1">
               {heroSocials.map((social) => {
                 const Icon = socialIcons[social.label];
@@ -127,19 +132,19 @@ export default function Hero() {
                     target={social.external ? "_blank" : undefined}
                     rel={social.external ? "noopener noreferrer" : undefined}
                     aria-label={social.label}
-                    className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-muted hover:text-accent transition-colors"
+                    className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-muted hover:text-accent hover:-translate-y-0.5 transition-all duration-150"
                   >
                     {Icon ? <Icon className="w-5 h-5" /> : null}
                   </a>
                 );
               })}
             </div>
-          </Reveal>
+          </HeroIn>
         </div>
 
-        <Reveal delay={220} className="w-full">
+        <HeroIn delay={200} className="w-full">
           <Terminal />
-        </Reveal>
+        </HeroIn>
       </div>
     </section>
   );

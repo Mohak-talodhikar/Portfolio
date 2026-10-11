@@ -4,6 +4,49 @@ import { Link, useRouter } from "../router.tsx";
 import { useTheme } from "../theme.tsx";
 import { MenuIcon, CloseIcon, SunIcon, MoonIcon } from "../icons.tsx";
 
+/**
+ * Scroll journey cue: 2px accent hairline pinned to the viewport top,
+ * scaleX follows page progress. One passive listener + rAF throttle —
+ * idle at rest, zero cost. Absent entirely under reduced-motion.
+ */
+function ScrollProgress() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setEnabled(true);
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? window.scrollY / max : 0;
+      if (ref.current) {
+        ref.current.style.transform = `scaleX(${progress})`;
+      }
+    };
+    const onScroll = () => {
+      if (raf === 0) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf !== 0) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  if (!enabled) return null;
+  return (
+    <div
+      ref={ref}
+      aria-hidden="true"
+      className="fixed top-0 left-0 right-0 h-0.5 bg-accent origin-left"
+      style={{ transform: "scaleX(0)" }}
+    />
+  );
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const { path } = useRouter();
@@ -59,7 +102,9 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="fixed top-[max(0.75rem,env(safe-area-inset-top))] left-0 right-0 z-50 flex justify-center px-4">
+    <>
+      <ScrollProgress />
+      <header className="fixed top-[max(0.75rem,env(safe-area-inset-top))] left-0 right-0 z-50 flex justify-center px-4">
       <div className="w-full max-w-5xl rounded-md border border-border bg-background/95 backdrop-blur-sm shadow-sm flex items-center justify-between px-4 sm:px-5 py-3">
         <Link
           to="/"
@@ -68,13 +113,6 @@ export default function Header() {
         >
           M. Talodhikar
         </Link>
-
-        <p
-          aria-hidden="true"
-          className="hidden lg:block font-display italic text-sm text-muted"
-        >
-          Portfolio, 2026
-        </p>
 
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-7">
@@ -139,7 +177,7 @@ export default function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          className="fixed inset-0 z-50 bg-background md:hidden flex flex-col"
+          className="menu-in fixed inset-0 z-50 bg-background md:hidden flex flex-col"
         >
           <div className="flex justify-end p-4">
             <button
@@ -169,6 +207,7 @@ export default function Header() {
           </nav>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 }

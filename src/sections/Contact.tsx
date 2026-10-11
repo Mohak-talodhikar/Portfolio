@@ -1,5 +1,6 @@
 import { contact, contactLinks, profile } from "../data.ts";
 import { Reveal } from "../Reveal.tsx";
+import { CopyEmail } from "../CopyEmail.tsx";
 import { GitHubIcon, LinkedInIcon, MailIcon } from "../icons.tsx";
 import type { ComponentType } from "react";
 
@@ -11,13 +12,12 @@ const linkIcons: Record<string, ComponentType<{ className?: string }>> = {
 
 export default function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-heading" className="py-20 md:py-28 border-t border-border">
+      <section id="contact" aria-labelledby="contact-heading" className="py-28 md:py-36 border-t border-border">
       <div className="max-w-5xl mx-auto px-6">
         <Reveal>
-          <p className="small-caps text-accent">05 · Get In Touch</p>
           <h2
             id="contact-heading"
-            className="mt-2 font-display text-3xl md:text-5xl font-semibold tracking-tight"
+            className="font-display text-4xl md:text-6xl font-semibold tracking-tight"
           >
             {contact.heading}
           </h2>
@@ -25,15 +25,18 @@ export default function Contact() {
             {contact.text}
           </p>
         </Reveal>
-        <Reveal delay={100}>
+        <Reveal>
           <div className="mt-8">
-            <a
-              href={`mailto:${profile.email}`}
-              className="inline-flex items-center gap-2.5 rounded-md bg-accent text-accent-ink font-semibold px-7 h-12 hover:bg-accent-deep transition-colors"
-            >
-              <MailIcon className="w-5 h-5" />
-              {profile.email}
-            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={`mailto:${profile.email}`}
+                className="inline-flex items-center gap-2.5 rounded-md bg-accent text-accent-ink font-semibold px-7 h-12 hover:bg-accent-deep transition-colors"
+              >
+                <MailIcon className="w-5 h-5" />
+                {profile.email}
+              </a>
+              <CopyEmail className="inline-flex items-center rounded-md border border-border font-semibold px-5 h-12 hover:border-accent hover:text-accent transition-colors" />
+            </div>
             <ul className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
               {contactLinks
                 .filter((link) => link.label !== "Email")
