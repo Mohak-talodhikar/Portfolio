@@ -1,0 +1,30 @@
+# Mohak Talodhikar
+
+> AI Engineer building grounded RAG chatbots and serverless web apps with Python, FastAPI, FAISS, and AWS. B.Tech CSE graduate working on applied LLM systems. Open to full-time AI Engineer and GenAI Engineer roles.
+
+## Pages
+
+- [Home](https://mohaktalodhikar.runs-on.dev/): Portfolio overview, availability, and featured work.
+- [About](https://mohaktalodhikar.runs-on.dev/about): Background, working style, and proof points.
+- [Projects](https://mohaktalodhikar.runs-on.dev/projects): Case studies — problem, role, method, outcomes for each project.
+- [Skills](https://mohaktalodhikar.runs-on.dev/skills): Generative AI & RAG, Programming & Backend, Cloud & Deployment, Tools & Frameworks — each skill linked to the project that proves it.
+- [Contact](https://mohaktalodhikar.runs-on.dev/contact): Email is the fastest way to reach him.
+
+## Projects
+
+- [RAG ChatBot](https://github.com/Mohak-talodhikar/RAG-ChatBot): Retrieval-augmented chatbot using FAISS vector search and Gemini for grounded, source-linked LLM answers.
+- [Aura Finance](https://github.com/Mohak-talodhikar/Aura-Finance): Serverless personal finance tracker built with React, TypeScript, and Firebase.
+- [Online Voting System](https://github.com/Mohak-talodhikar/Online-voting-system): Serverless voting application on AWS.
+
+## Skills
+
+Generative AI & RAG: RAG Systems & LLMs, LangChain, FAISS, Hugging Face, Gemini.
+Programming & Backend: Python, FastAPI, React, TypeScript.
+Cloud & Deployment: AWS, Docker, Firebase.
+Tools & Frameworks: Git & GitHub, n8n.
+
+## Contact
+
+- Email: mohaktalodhikar@gmail.com
+- GitHub: https://github.com/Mohak-talodhikar
+- LinkedIn: https://linkedin.com/in/mohak-talodhikar

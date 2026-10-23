@@ -197,3 +197,32 @@ green=proof). What changed:
   (was 640ms) · requests 16→10 · CLS 0 · zero new deps.
   DOM-verified: all 8 effects animate, replay on navigation, and
   disable under reduced-motion; 0px mobile overflow on all 5 routes.
+
+## 11. SEO + AEO (canonical: mohaktalodhikar.runs-on.dev)
+
+Canonical URL flipped: runs-on.dev name serves the site directly
+(CNAME → cname.vercel-dns.com); vercel.app 308-redirects to it.
+
+- **Single source of truth:** `scripts/site.mjs` (SITE, PERSON, routes
+  meta) — consumed by prerender + IndexNow. Titles/descriptions must
+  stay in sync with `src/router.tsx`.
+- **Per-route OG/Twitter:** prerender rewrites og:title/description/url
+  + twitter:* per page; `og:image` is `public/og.png` (1200×630 duotone
+  card, ~31KB, generated once via browser harness — not a runtime dep).
+- **JSON-LD:** Person (description, email, knowsAbout from real skills,
+  sameAs) + WebSite, in a `@graph`.
+- **Sitemap/robots generated at build** (lastmod = build date; robots
+  explicitly allows GPTBot/OAI-SearchBot/PerplexityBot/ClaudeBot/
+  Google-Extended for AEO). No static copies in `public/`.
+- **llms.txt** (AEO): plain-markdown entity card at site root — pages,
+  projects, skills, contact for AI crawlers.
+- **Noscript:** full bio + project list + skills + links for non-JS
+  scrapers.
+- **IndexNow:** `npm run indexnow` (zero-dep `scripts/indexnow.mjs`,
+  key file in `public/<uuid>.txt`) — run after each deploy; pings
+  Bing/Yandex with all 5 URLs. `-- --dry-run` supported (PowerShell
+  doesn't forward flags to npm reliably — use `node scripts/indexnow.mjs
+  --dry-run` directly for dry runs).
+- **User-side (not in repo):** GSC + Bing Webmaster verification meta
+  tokens (add to `index.html` when received), sitemap submission,
+  GitHub/LinkedIn website backlinks.
