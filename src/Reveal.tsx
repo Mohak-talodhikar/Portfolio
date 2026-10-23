@@ -1,10 +1,8 @@
-import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 interface RevealProps {
   children: ReactNode;
   className?: string;
-  /** Stagger delay in ms for grouped entrances. */
-  delay?: number;
   /** Fired once when the wrapped content first enters the viewport. */
   onVisible?: () => void;
 }
@@ -14,7 +12,7 @@ interface RevealProps {
  * when content enters the viewport. No slide, no lift, no bounce.
  * Content stays visible with no JS and under reduced-motion (see CSS).
  */
-export function Reveal({ children, className = "", delay = 0, onVisible }: RevealProps) {
+export function Reveal({ children, className = "", onVisible }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const visibleRef = useRef(onVisible);
   visibleRef.current = onVisible;
@@ -43,10 +41,8 @@ export function Reveal({ children, className = "", delay = 0, onVisible }: Revea
     return () => observer.disconnect();
   }, []);
 
-  const style = { "--reveal-delay": `${delay}ms` } as CSSProperties;
-
   return (
-    <div ref={ref} className={`reveal ${className}`} style={style}>
+    <div ref={ref} className={`reveal ${className}`}>
       {children}
     </div>
   );

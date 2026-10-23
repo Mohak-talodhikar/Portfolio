@@ -37,13 +37,13 @@ export const routes: RouteMeta[] = [
     path: "/skills",
     title: "Skills | Mohak Talodhikar",
     description:
-      "Proficient: Python, React, FastAPI, RAG systems, AWS. Familiar: Docker, Hugging Face, FAISS, and more.",
+      "Generative AI & RAG, Python, FastAPI, AWS, React — with links to the projects that prove each one.",
   },
   {
     path: "/contact",
     title: "Contact | Mohak Talodhikar",
     description:
-      "Get in touch — open to full-time AI Engineer roles and freelance AI work. Email is fastest.",
+      "Get in touch — open to full-time AI Engineer and GenAI Engineer roles. Email is fastest.",
   },
 ];
 

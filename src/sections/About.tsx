@@ -57,12 +57,12 @@ export default function About() {
       <section id="about" aria-labelledby="about-heading" className="py-28 md:py-36 border-t border-border">
       <div className="max-w-5xl mx-auto px-6">
         <Reveal>
-          <h2
+          <h1
             id="about-heading"
             className="font-display text-4xl md:text-6xl font-semibold tracking-tight"
           >
             {about.heading}
-          </h2>
+          </h1>
         </Reveal>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-5 gap-8">
           <Reveal className="md:col-span-3">

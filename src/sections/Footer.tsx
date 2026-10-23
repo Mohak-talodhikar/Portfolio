@@ -34,7 +34,7 @@ export default function Footer({ onBackToTop }: { onBackToTop: () => void }) {
                 <Link
                   to={item.href}
                   ariaCurrent={path === item.href ? "true" : undefined}
-                  className="text-sm font-semibold text-muted hover:text-foreground transition-colors"
+                  className="inline-flex items-center min-h-[44px] text-sm font-semibold text-muted hover:text-foreground transition-colors"
                 >
                   {item.name}
                 </Link>

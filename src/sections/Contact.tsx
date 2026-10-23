@@ -15,12 +15,12 @@ export default function Contact() {
       <section id="contact" aria-labelledby="contact-heading" className="py-28 md:py-36 border-t border-border">
       <div className="max-w-5xl mx-auto px-6">
         <Reveal>
-          <h2
+          <h1
             id="contact-heading"
             className="font-display text-4xl md:text-6xl font-semibold tracking-tight"
           >
             {contact.heading}
-          </h2>
+          </h1>
           <p className="mt-4 text-muted max-w-xl leading-relaxed">
             {contact.text}
           </p>

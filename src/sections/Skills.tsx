@@ -17,12 +17,12 @@ export default function Skills() {
     >
       <div className="max-w-5xl mx-auto px-6">
         <Reveal>
-          <h2
+          <h1
             id="skills-heading"
             className="font-display text-4xl md:text-6xl font-semibold tracking-tight"
           >
             Skills
-          </h2>
+          </h1>
         </Reveal>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">

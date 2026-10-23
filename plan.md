@@ -123,19 +123,21 @@ JS 224.5KB · CSS 25.5KB · fonts 7 woff2 · zero images · zero external
 requests · zero animation loops · 51 packages · zero new dependencies
 (router is hand-rolled).
 
-## 9. Theming (BUILT — was missing from this file)
+## 8. Theming (BUILT — was missing from this file)
 
 No OS sniffing: brand default dark, manual toggle, remembered choice.
+Blue-green duotone (paper/abyss canvas; blue=action, green=proof).
 
-| Token | Dark (Default: Midnight Scholar) | Light (Archival Paper Mode) |
+| Token | Light (Paper — default toggle) | Dark (Abyss — brand default) |
 |---|---|---|
-| canvas | `#0B0F19` | `#F8FAFC` |
-| surface | `#121826` | `#FFFFFF` |
-| text | `#F1F5F9` | `#0F172A` |
-| muted | `#8596B0` | `#475569` |
-| accent (text/links) | `#3B82F6` | `#1D4ED8` (deepened for AA) |
-| accent fills | cobalt + white ink | cobalt + white ink |
-| borders | `#1E293B` | `#CBD5E1` |
+| canvas / `--bg` | `#F7F5F0` | `#050B14` |
+| surface / `--surface` | `#FFFFFF` | `#101823` |
+| text / `--fg` | `#16181D` | `#E8EEF2` |
+| muted / `--muted-fg` | `#5C6470` | `#94A3B8` |
+| accent (action) | `#1D4ED8` | `#5B9CFF` |
+| accent-deep | `#1E40AF` | `#7DB3FF` |
+| proof / status | `#15803D` | `#34D399` |
+| borders | `#E2DCCB` | `#1E2A24` |
 
 Implementation: `src/theme.tsx` (ThemeContext, localStorage `mt-theme`),
 pre-paint init script in `index.html` (zero flash), header toggle
@@ -143,7 +145,7 @@ pre-paint init script in `index.html` (zero flash), header toggle
 theme. Terminal keeps fixed dark chrome in both themes as an authentic code artifact.
 Verified: zero hard-coded theme colors in `src/`, so all components instantly re-theme seamlessly.
 
-## 8. Standing non-goals
+## 9. Standing non-goals
 
 No invented metrics · no WebGL/canvas/rAF libs · no third font family ·
 no photo · fake career timeline stays out.
@@ -184,6 +186,14 @@ green=proof). What changed:
   hash-aware: strips hash for state, scrolls to target); Docker,
   Git & GitHub, n8n stay unlinked — no fictional links. Specialist
   blockquote kept. Dead `techPills` export removed.
-- **Budgets (verified):** JS 231.45KB · CSS 29.26KB · zero new deps.
+- **Optimize pass (audit P1+P2):** dropped unused Playfair/Source Sans
+  700 weights (8→6 woff2); zero-dep Vite plugin preloads the two
+  critical faces (hashed names, enforce:post); `scripts/prerender-meta.mjs`
+  emits per-route index.html (title/description/canonical) for
+  crawlers — single-source meta stays in `router.tsx`. Hardened: all
+  subpages now have an h1; header/footer nav + logo targets ≥44px
+  (WCAG 2.2 AA 2.5.8).
+- **Budgets (verified):** JS 231.66KB · CSS 28.78KB · FCP 296ms
+  (was 640ms) · requests 16→10 · CLS 0 · zero new deps.
   DOM-verified: all 8 effects animate, replay on navigation, and
   disable under reduced-motion; 0px mobile overflow on all 5 routes.

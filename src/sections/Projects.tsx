@@ -157,12 +157,12 @@ export default function Projects() {
       <section id="projects" aria-labelledby="projects-heading" className="py-28 md:py-36 border-t border-border">
       <div className="max-w-5xl mx-auto px-6">
         <Reveal>
-          <h2
+          <h1
             id="projects-heading"
             className="font-display text-4xl md:text-6xl font-semibold tracking-tight"
           >
             Projects
-          </h2>
+          </h1>
           <p className="mt-3 text-muted text-base md:text-lg max-w-2xl">
             {projectsIntro}
           </p>

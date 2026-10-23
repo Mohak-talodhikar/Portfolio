@@ -109,7 +109,7 @@ export default function Header() {
         <Link
           to="/"
           ariaLabel="Mohak Talodhikar — back to home"
-          className="font-display text-lg font-semibold tracking-tight"
+          className="inline-flex items-center min-h-[44px] font-display text-lg font-semibold tracking-tight"
         >
           M. Talodhikar
         </Link>
@@ -121,7 +121,7 @@ export default function Header() {
                 <Link
                   to={item.href}
                   ariaCurrent={path === item.href ? "true" : undefined}
-                  className="text-sm font-medium text-muted hover:text-accent transition-colors"
+                  className="inline-flex items-center min-h-[44px] text-sm font-medium text-muted hover:text-accent transition-colors"
                 >
                   {item.name}
                 </Link>
